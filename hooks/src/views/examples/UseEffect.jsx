@@ -9,19 +9,44 @@ function calcFatorial(num) {
     return calcFatorial(n - 1) * n
 }
 
+/* function calcParImpar(num) {
+    const pi = parseInt(num)
+    if(pi < 0) return -1
+    return calcParImpar(pi % 2 === 0)
+} */
+
 const UseEffect = (props) => {
     const [number, setNumber] = useState(1)
     const [fatorial, setFatorial] = useState(1)
-
+    
     useEffect(function(){
         setFatorial(calcFatorial(number))
     }, [number])
-
+    
     useEffect(function() {
         if(fatorial > 1000000){
             document.title = 'Eita!!!'
         }
     }, [fatorial])
+    
+    /* useEffect(function() {
+        setStatus(calcParImpar(number))
+    }, [number])
+    
+    useEffect(function() {
+        if(status === 0){
+            return 'Par'
+        }
+        else {
+            return 'Impar'
+        }
+    }) */
+    
+    const [status, setStatus] = useState("Ímpar")
+    
+    useEffect(function() {
+        setStatus(number % 2 === 0 ? 'Par' : 'Impar')
+    }, [number])
 
     return (
         <div className="UseEffect">
@@ -36,12 +61,17 @@ const UseEffect = (props) => {
                     <span className="text red">{ fatorial === -1 ? 'Não existe' : fatorial }</span>
                 </div>
                 <input type="number" className="input"
-                    value={number}
+                    value={ number }
                     onChange={e => setNumber(e.target.value)} />
             </div>
 
             <SectionTitle title='Exercicio #02'></SectionTitle>
-            <div className="center"></div>
+            <div className="center">
+                <div>
+                    <span className="text">Status: </span>
+                    <span className="text red">{ status }</span>
+                </div>
+            </div>
         </div>
     )
 }
