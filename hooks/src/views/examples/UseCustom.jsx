@@ -7,14 +7,18 @@ import { useFetch } from '../../hooks/useFetch'
 const UseRef = (props) => {
 
     const [count, inc, dec] = useCounter(10)
-    const url = 'https://files.cod3r.com.br/curso-react/estados.json'
+    const url = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados'
     const response = useFetch(url)
 
     function showStates(states){
-        return states.map(state => <li>{ state.nome } - { state.sigla }</li>)
+        return states.map(state => <li>{state.nome} - {state.sigla}</li>)
     }
 
     //https://files.cod3r.com.br/curso-react/estados.json
+    //https://servicodados.ibge.gov.br/api/v1/localidades/estados
+    //https://servicodados.ibge.gov.br/api/v1/localidades/municipios/3550308/distritos
+    //comando para usar no console do navegador
+    //fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados').then(resp => resp.json()).then(json => console.log(json))
 
     return (
         <div className="UseCustom">
@@ -37,7 +41,7 @@ const UseRef = (props) => {
             <SectionTitle title='Exercício #01'/>
             <div className="center">
                 <ul>
-                    { response.data ? showStates(response.data) : false }
+                    { !response.loading ? showStates(response.data) : false }
                 </ul>
             </div>
         </div>
